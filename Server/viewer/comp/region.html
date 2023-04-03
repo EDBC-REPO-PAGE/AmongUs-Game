@@ -1,0 +1,42 @@
+<main class="uk-light" id="region" uk-modal>
+
+       <div class="uk-modal-dialog uk-background-secondary
+              uk-border-default uk-border-small
+              uk-rounded-large uk-padding-large
+              uk-width-2-3@m uk-width-3-4@s">
+              
+              <button class="uk-modal-close-default" type="button" uk-close></button>
+
+              <h2>Select Region</h2>
+
+              <section>
+              /°(()=>{
+                     return ['latam','usa','eur','global'].map(x=>`
+                            <a onclick="device.storage.set({region:'${x}'})"
+                               class="uk-button uk-default"> ${x}
+                            </a>
+                     `).join('\n');
+              })()°/
+              </section>
+
+    </div>
+
+</main>
+
+<script>
+(function(){
+
+       if( !device.storage.get('region') )
+            device.storage.set({'region':'global'})
+       
+       function main(){
+              UIkit.modal($('#region')).hide()
+              const region = device.storage.get('region').toUpperCase();
+              $('[regionSelected]').innerHTML = `Region - ${region}`;
+       }
+
+       device.storage.observeField('region',(prev,act)=>main())
+       main();
+
+})()
+</script>

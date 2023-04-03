@@ -1,0 +1,96 @@
+<main class="uk-light" id="settings" uk-modal>
+
+       <div class="uk-modal-dialog uk-background-secondary
+              uk-border-default uk-border-small
+              uk-rounded-large uk-padding-large
+              uk-width-2-3@m uk-width-3-4@s">
+              
+              <button class="uk-modal-close-default" type="button" uk-close></button>
+
+              <h2>Settings</h2>
+
+              <h3>Controls</h3>
+              <div class="uk-child-width-1-2 uk-padding-small
+                     uk-flex uk-flex-wrap">
+
+                     <label class="uk-text-lead uk-width-1-4">Sensibility:</label>
+                     <input type="range" value="50" max="100" min="0"
+                            class="uk-width-4-6 uk-range"
+                            id="mouse">
+                     <br>
+
+                     <label class="uk-text-lead uk-width-1-4">UI Size:</label>
+                     <input type="range" value="70" max="100" min="0"
+                            class="uk-width-4-6 uk-range"
+                            id="ui">
+                     <br>
+
+              </div>
+
+              <h3>Sound</h3>
+              <div class="uk-child-width-1-2 uk-padding-small
+                     uk-flex uk-flex-wrap">
+
+                     <label class="uk-text-lead uk-width-1-4">Sfx:</label>
+                     <input type="range" value="50" max="100" min="0"
+                            class="uk-width-4-6 uk-range"
+                            id="sfx">
+                     <br>
+
+                     <label class="uk-text-lead uk-width-1-4">Music:</label>
+                     <input type="range" value="70" max="100" min="0"
+                            class="uk-width-4-6 uk-range"
+                            id="music">
+                     <br>
+
+              </div>
+
+              <hr class="uk-default">
+              <input class="uk-button uk-default uk-enphasis
+                            uk-width-expand uk-rounded"
+                     onclick="window.saveSettings()"
+                     type="button" value="OK">
+
+    </div>
+
+</main>
+
+<script>
+(function(){
+
+       if( !device.storage.get('settings') )
+              device.storage.set({
+                     'settings': JSON.stringify({
+                            music: 70, sfx: 50,
+                            mouse: 30, ui: 70,
+                     })
+              })
+       
+       function main(){
+              const obj = JSON.parse(device.storage.get('settings')); 
+              for( const x in obj ) $(`#${x}`).value = obj[x];
+       }
+
+       window.saveSettings = function(){
+              UIkit.modal($('#settings')).hide()
+              device.storage.set({
+                     'settings': JSON.stringify({
+                            music: +$('#music').value,
+                            mouse: +$('#mouse').value,
+                            sfx: +$('#sfx').value,
+                            ui: +$('#ui').value,
+                     })
+              })
+       }
+
+       device.storage.observeField('settings',(prev,act)=>{
+              const obj = JSON.parse(act); for( const x in obj ){
+                     godot.settings[`set_${x}`](obj[x]);
+                     $(`#${x}`).value = obj[x];
+              }
+       })
+
+       main();
+
+})()
+</script>

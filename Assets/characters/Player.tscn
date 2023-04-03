@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/Shader/camera.tres" type="Shader" id=1]
+[ext_resource path="res://Assets/Scripts/Player.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape" id=3]
+radius = 0.05
+height = 0.15
+
+[sub_resource type="QuadMesh" id=4]
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 1 )
+
+[node name="Player" type="RigidBody"]
+mode = 2
+gravity_scale = 0.0
+contacts_reported = 1
+axis_lock_linear_y = true
+script = ExtResource( 2 )
+
+[node name="Collision" type="CollisionShape" parent="."]
+transform = Transform( 10, -4.37114e-07, -1.91069e-14, 0, -4.37114e-07, 10, -4.37114e-07, -10, -4.37114e-07, 0, 1.3, 0 )
+shape = SubResource( 3 )
+
+[node name="Camera" type="Camera" parent="Collision"]
+transform = Transform( 0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 3.34779e-09, -3.34779e-09, 0.0765884 )
+current = true
+fov = 75.0
+near = 0.01
+
+[node name="shader" type="CSGMesh" parent="Collision/Camera"]
+transform = Transform( 1, 1.76705e-28, -4.37114e-08, -1.55294e-22, 1, -3.55271e-15, 4.37114e-08, 3.55271e-15, 1, -3.34779e-08, -2.06588, -4.433e-14 )
+extra_cull_margin = 16384.0
+mesh = SubResource( 4 )
+material = SubResource( 6 )

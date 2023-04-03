@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "molly-js": "^1.2.22",
+    "ws": "^8.13.0"
+  }
+}

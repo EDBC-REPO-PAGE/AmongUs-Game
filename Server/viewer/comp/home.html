@@ -1,0 +1,59 @@
+<section class="uk-border-small uk-rounded uk-padding-small
+                uk-position-top-right uk-position-small 
+                uk-light">
+    version - 1.0.0 - beta
+</section>
+
+<section class="uk-border-small uk-rounded uk-padding-small
+                uk-position-top-left uk-position-small 
+                uk-light" regionSelected
+         uk-toggle="target:#region">
+    Region
+</section>
+
+<main class="uk-flex uk-flex-center uk-flex-middle uk-flex-column
+             uk-height-expand uk-light">
+
+    <h1> /°process.env.NAME°/ </h1>
+
+    <section class="uk-position-bottom-center uk-position-small
+                    uk-child-width-1-1 uk-flex uk-flex-wrap 
+                    uk-width-3-4@m uk-width-1-2@s">
+                    <!--uk-child-width-1-2-->
+
+        <div class="uk-padding-small uk-child-width-1-1">
+            <a class="uk-button uk-default uk-rounded
+                      uk-text-truncate"
+               onclick="window.connectServer()"> 
+                play <!--QuickPlay--> 
+            </a>
+        </div>
+        <!--
+        <div class="uk-padding-small uk-child-width-1-1">
+            <a class="uk-button uk-default uk-rounded
+                      uk-text-truncate"
+               onclick="window.createServer()">
+                Private Server 
+            </a>
+        </div>
+        -->
+        <!--
+        <div class="uk-padding-small uk-child-width-1-1">
+            <a class="uk-button uk-default uk-rounded
+                      uk-text-truncate"
+               uk-toggle="target:#connect">  
+                Connect Server
+            </a>
+        </div>
+        -->
+        <div class="uk-padding-small uk-child-width-1-1">
+            <a class="uk-button uk-default uk-rounded
+                      uk-text-truncate"
+               uk-toggle="target:#settings">  
+                Settings 
+            </a>
+        </div>
+
+    </section>
+
+</main>

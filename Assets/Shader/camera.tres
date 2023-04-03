@@ -1,0 +1,34 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type spatial;
+render_mode unshaded, cull_disabled;
+
+void vertex(){
+	POSITION = vec4(VERTEX,0.3);
+}
+
+float convolution( sampler2D image, vec2 uv, vec2 uv_size ){
+	float sum = 0., data = 0.; vec2 size = vec2(1.) / uv_size;
+	for( int i=-1; i<=1; i++ ){ for( int j=-1; j<=1; j++ ){
+		data = -1.; if( i==0 && j==0 ) data = 8.;
+		vec2 POSA = vec2( float(i), float(j) ) * size;
+		vec4 IMG = texture( image, uv + POSA ) * data;
+		sum += (IMG.r + IMG.g + IMG.b) / 3.;
+	}}	return step(sum,0.1);
+}
+
+vec3 chromatic_aberration( sampler2D image, vec2 uv, vec2 size ){
+	return vec3(
+		texture(image, uv + vec2(1 , 0) / size ).r,
+		texture(image, uv + vec2(-1,-1) / size ).g,
+		texture(image, uv + vec2(1 , 1) / size ).b
+	);
+}
+
+void fragment(){
+	vec2 size = VIEWPORT_SIZE; vec2 uv = SCREEN_UV; 
+	vec3 ABERRATION = chromatic_aberration( SCREEN_TEXTURE, uv, size );
+	ALBEDO = vec3(convolution( SCREEN_TEXTURE, uv, size ));
+	ALBEDO*= ABERRATION;
+}"

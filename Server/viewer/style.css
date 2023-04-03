@@ -1,0 +1,23 @@
+
+:root {
+    --color-secondary: black;
+}
+
+* { user-select: none; }
+
+@font-face {
+    font-family: amongus;
+    src: url('/Assets/Font/AmongUs.ttf');
+}
+
+h1,h2,h3,h4,h5,h6 { 
+    padding: 0px; margin: 0px;
+    font-family: amongUs; 
+    font-display: swap;
+}
+
+/°(()=>{
+    return ['h1','h2','h3','h4','h5','h6'].map((x,i)=>{
+        return `${x} { font-size: ${Math.ceil(150/(i+1))}px }`
+    }).join('\n')
+})()°/

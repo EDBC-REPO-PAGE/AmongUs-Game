@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/Assets/Module/UIkit.css">
+        <script src="/Assets/Module/UIkit.js"></script>
+        <script src="/Assets/Module/Molly.js"></script>
+        <script src="/Assets/Module/Peer.js"></script>
+        <link rel="stylesheet" href="/style.css">
+        <script src="/main.js"></script> 
+
+        /°(()=>{
+            process.env.GODOT_CONFIG = '{"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":1507760,"index.wasm":17867504},"focusCanvas":true,"gdnativeLibs":[]}';
+            process.env.NAME = 'AmungUs';
+            process.env.GODOT_URL = 'index.js';
+        })()°/
+
+    </head>
+    <body>
+        <div class="uk-position-fixed uk-background-secondary
+                    uk-width-expand uk-height-expand
+                    uk-light">
+
+            <section page="progress">
+                <° ./comp/loading.html °>
+            </section>
+
+            <section page="home" hidden>
+                <° ./comp/home.html °>
+                <° ./comp/task.html °>
+            </section>
+
+            <section page="ui" hidden>
+            </section>
+
+            <° ./comp/game.html °>
+            <° ./comp/region.html °>
+            <° ./comp/connect.html °>
+            <° ./comp/settings.html °>
+
+        </div>
+    </body>
+</html>

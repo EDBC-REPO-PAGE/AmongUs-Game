@@ -1,0 +1,20 @@
+<script>
+(function(){
+
+    godot.events.push(()=>{
+        window.godot.player.can_rotate(true)
+        window.godot.player.can_move(true)
+        $('[page=ui]').hidden = false;
+    })
+
+    godot.events.push(()=>{
+        
+    })
+
+    window.onclick = ()=>{
+        $('body').requestPointerLock()
+    }
+    
+
+})()
+</script>

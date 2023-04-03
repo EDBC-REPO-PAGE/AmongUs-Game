@@ -1,0 +1,73 @@
+<main class="uk-light" id="connect" uk-modal>
+
+       <div class="uk-modal-dialog uk-background-secondary
+              uk-border-default uk-border-small
+              uk-rounded-large uk-padding-large">
+              
+              <button class="uk-modal-close-default" type="button" uk-close></button>
+              
+              <h3>Connect To A Server</h3>
+              <input id="s_key" class="uk-input" placeholder="server key"> <hr>
+              <button class="uk-button uk-default uk-rounded-large"
+                      onclick="window.connectServer($('#s_key').value)">
+                      Connect
+              </button>
+
+       </div>
+
+</main>
+
+<script>
+(function(){
+
+       function create_peer( id ){
+              const peer = new Peer(id);
+              device.storage.set({id});
+              window.state.set({peer});
+       }
+
+       function open_peer( cli,id ){
+              if( !id || id == '' )
+                     cli.send(JSON.stringify({
+                            type: 'get_server_id', payload: {
+                                   region: device.storage.get('region'),
+                                   id: device.storage.get('id'),
+                                   game: 'Amungus', limit: 15,
+                            }
+                     }));
+              else   window.state.set({server:id});
+       }
+
+       function on_client_open(cli){
+              if( !device.storage.get('id') )
+                     cli.send(JSON.stringify({
+                            type: 'get_client_id', payload: {
+                                   region: device.storage.get('region'),
+                                   game: 'Amungus',stamp: Date.now(),
+                                   browser: device.info.getBrowser(),
+                                   OS: device.info.getOS(),
+                            }
+                     }))
+              else   create_peer(device.storage.get('id'));
+              setTimeout(()=>open_peer(cli),2500);
+       }
+
+       function on_client_message(cli,data){
+              try {
+                     switch( data.type ){
+                            case 'server_id': return open_peer( cli,data.data ); break;
+                            case 'client_id': return create_peer( data.data ); break;
+                     };
+              } catch(e) { console.log(e) }
+       }
+
+       window.connectServer = function( id ){
+              const protocol = !(/https/).test(window.origin) ? 'ws' : 'wss';
+              const origin = window.origin.replace(/^[^:]+/i,protocol);
+              const cli = new WebSocket(origin); cli.id = id;
+              cli.onopen = ()=>on_client_open(cli);
+              cli.onmessage = (msg)=>on_client_message(cli,JSON.parse(msg.data));
+       }
+
+})()
+</script>

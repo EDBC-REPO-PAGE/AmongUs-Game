@@ -1,0 +1,41 @@
+<script src="/°process.env.GODOT_URL°/"></script>
+<canvas class="uk-position-cover uk-index-back
+               uk-width-1-1 uk-height-1-1" 
+        id="canvas">
+</canvas>
+
+<script>
+(function(){
+       
+        window.player = new device.state({
+                position: [0,0,0], rotation: [0,0,0],
+        }); const angle = [0,0];
+        
+        godot.events.push(()=>{
+        
+                addEvent(window,'keydown',(ev)=>{
+                             if( (/w/).test(ev.key) ) angle[0] =-1;
+                        else if( (/s/).test(ev.key) ) angle[0] = 1;
+                             if( (/a/).test(ev.key) ) angle[1] =-1;
+                        else if( (/d/).test(ev.key) ) angle[1] = 1;
+                        window.godot.player.move_to(angle,300)
+                })
+        
+                addEvent(window,'keyup',(ev)=>{
+                             if( (/w/).test(ev.key) ) angle[0] = 0;
+                        else if( (/s/).test(ev.key) ) angle[0] = 0;
+                             if( (/a/).test(ev.key) ) angle[1] = 0;
+                        else if( (/d/).test(ev.key) ) angle[1] = 0;
+                        window.godot.player.move_to(angle,300)
+                })
+        
+                addEvent(window,'mousemove',(ev)=>{
+                        window.godot.player.rotate_to(
+                                [ev.movementX, ev.movementY],0.003
+                        )
+                })
+        
+        })
+    
+})()
+</script>
